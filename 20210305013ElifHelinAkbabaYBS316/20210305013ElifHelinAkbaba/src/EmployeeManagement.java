@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Collectors;
 
 interface Printable {
     void printDetails();
@@ -144,6 +145,23 @@ public class EmployeeManagement {
 
         System.out.println("Employee with ID " + idToEdit + " edited successfully.");
     }
+    static void filterEmployeesBySalary(double minSalary) {
+        List<Employee> filteredEmployees = employees.stream()
+                .filter(employee -> employee.salary >= minSalary)
+                .collect(Collectors.toList());
+
+        if (filteredEmployees.isEmpty()) {
+            System.out.println("No employees found with salary greater than or equal to " + minSalary);
+            return;
+        }
+
+        System.out.println("\nEmployees with salary greater than or equal to " + minSalary + ":");
+        System.out.println("ID\tName\tContact\t\tGender\tPosition\tSalary");
+        filteredEmployees.forEach(employee -> {
+            System.out.println(employee.employeeId + "\t" + employee.name + "\t" + employee.contact + "\t" +
+                    employee.gender + "\t" + employee.position + "\t\t" + employee.salary);
+        });
+    }
 
     public static void main(String[] args) {
         int choice;
@@ -182,6 +200,3 @@ public class EmployeeManagement {
         } while (wish == 'y' || wish == 'Y');
     }
 }
-
-
-
